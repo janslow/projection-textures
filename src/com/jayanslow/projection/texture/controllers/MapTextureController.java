@@ -43,8 +43,7 @@ public class MapTextureController implements TextureController {
 			return (ImageTexture) texture;
 
 		VideoTexture videoTexture = (VideoTexture) texture;
-		videoTexture.setCurrentFrame(currentFrame);
-		return videoTexture.getCurrentImageTexture();
+		return videoTexture.getImageTexture(currentFrame);
 	}
 
 	@Override

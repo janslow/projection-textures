@@ -69,7 +69,6 @@ public class ListVideoTexture implements VideoTexture {
 
 	}
 
-	private int							frame;
 	private boolean						loop;
 	private final List<ImageTexture>	images;
 
@@ -78,28 +77,17 @@ public class ListVideoTexture implements VideoTexture {
 	}
 
 	public ListVideoTexture(List<ImageTexture> images, boolean loop) {
-		frame = 0;
 		this.loop = loop;
 		this.images = images;
 	}
 
-	@Override
-	public ImageTexture get(int frame) {
-		return images.get(frame);
-	}
-
-	@Override
-	public int getCurrentFrame() {
-		return frame;
-	}
-
-	@Override
-	public ImageTexture getCurrentImageTexture() {
-		return get(getCurrentFrame());
-	}
-
 	public List<ImageTexture> getFrames() {
 		return images;
+	}
+
+	@Override
+	public ImageTexture getImageTexture(int frame) {
+		return images.get(frame);
 	}
 
 	@Override
@@ -130,28 +118,6 @@ public class ListVideoTexture implements VideoTexture {
 	@Override
 	public ListIterator<ImageTexture> listIterator() {
 		return new ListItr(0);
-	}
-
-	@Override
-	public void seek(int offset) {
-		int newFrame = frame + offset;
-		int n = getNumberOfFrames();
-		if (newFrame < 0)
-			frame = n - 1 - (-newFrame % n);
-		else
-			frame = newFrame % n;
-	}
-
-	@Override
-	public void setCurrentFrame(int frame) {
-		if (frame < 0)
-			throw new IllegalArgumentException("frame must be non-negative");
-		if (frame >= getNumberOfFrames())
-			if (loop)
-				frame %= getNumberOfFrames();
-			else
-				throw new IllegalArgumentException("frame must be less than size() for non-looped VideoTextures");
-		this.frame = frame;
 	}
 
 	@Override

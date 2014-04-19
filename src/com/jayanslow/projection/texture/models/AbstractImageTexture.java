@@ -7,7 +7,7 @@ public abstract class AbstractImageTexture implements ImageTexture {
 	}
 
 	@Override
-	public ImageTexture getCurrentImageTexture() {
+	public ImageTexture getImageTexture(int frame) {
 		return this;
 	}
 
@@ -20,8 +20,4 @@ public abstract class AbstractImageTexture implements ImageTexture {
 	public boolean isLoopable() {
 		return true;
 	}
-
-	@Override
-	public void seek(int offset) {}
-
 }
