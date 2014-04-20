@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ListVideoTexture implements VideoTexture {
+public class ListVideoTexture extends AbstractTexture implements VideoTexture {
 
 	private class Itr implements Iterator<ImageTexture> {
 
@@ -72,6 +72,8 @@ public class ListVideoTexture implements VideoTexture {
 	private final List<ImageTexture>	images;
 
 	public ListVideoTexture(List<ImageTexture> images) {
+		super(false);
+
 		this.images = images;
 	}
 

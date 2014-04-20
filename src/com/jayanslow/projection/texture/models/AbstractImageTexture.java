@@ -1,9 +1,9 @@
 package com.jayanslow.projection.texture.models;
 
-public abstract class AbstractImageTexture implements ImageTexture {
+public abstract class AbstractImageTexture extends AbstractTexture implements ImageTexture {
 
 	public AbstractImageTexture() {
-		super();
+		super(true);
 	}
 
 	@Override
@@ -14,11 +14,6 @@ public abstract class AbstractImageTexture implements ImageTexture {
 	@Override
 	public int getNumberOfFrames() {
 		return 1;
-	}
-
-	@Override
-	public boolean isImageTexture() {
-		return true;
 	}
 
 }
