@@ -26,6 +26,13 @@ public interface TextureController {
 	public ImageTexture getCurrentImageTexture(Face face);
 
 	/**
+	 * Gets the maximum frame number that can be displayed.
+	 * 
+	 * @return
+	 */
+	public int getMaximumFrame();
+
+	/**
 	 * Gets the texture for the specified face
 	 * 
 	 * @param face
@@ -60,12 +67,12 @@ public interface TextureController {
 	public void remove(Face face);
 
 	/**
-	 * Sets the current frame number
+	 * Sets the current frame number. The frame will be looped if time > getMaximumFrame()
 	 * 
 	 * @param time
 	 *            Non-negative frame number
 	 * @throws IllegalArgumentException
 	 *             Thrown if time is negative
 	 */
-	public void setCurrentFrame(int time) throws IllegalArgumentException;
+	public void setCurrentFrame(int frame) throws IllegalArgumentException;
 }

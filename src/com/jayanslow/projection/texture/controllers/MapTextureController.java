@@ -47,6 +47,18 @@ public class MapTextureController implements TextureController {
 	}
 
 	@Override
+	public int getMaximumFrame() {
+		int max = 0;
+		for (Texture t : map.values()) {
+			int temp = t.getNumberOfFrames();
+			if (temp > max)
+				max = temp;
+
+		}
+		return 0;
+	}
+
+	@Override
 	public Texture getTexture(Face face) {
 		return map.get(face);
 	}
