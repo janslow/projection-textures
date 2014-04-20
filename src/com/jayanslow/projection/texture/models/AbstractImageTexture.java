@@ -12,12 +12,13 @@ public abstract class AbstractImageTexture implements ImageTexture {
 	}
 
 	@Override
+	public int getNumberOfFrames() {
+		return 1;
+	}
+
+	@Override
 	public boolean isImageTexture() {
 		return true;
 	}
 
-	@Override
-	public boolean isLoopable() {
-		return true;
-	}
 }

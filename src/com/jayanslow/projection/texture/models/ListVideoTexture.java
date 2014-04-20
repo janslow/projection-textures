@@ -69,15 +69,9 @@ public class ListVideoTexture implements VideoTexture {
 
 	}
 
-	private boolean						loop;
 	private final List<ImageTexture>	images;
 
 	public ListVideoTexture(List<ImageTexture> images) {
-		this(images, true);
-	}
-
-	public ListVideoTexture(List<ImageTexture> images, boolean loop) {
-		this.loop = loop;
 		this.images = images;
 	}
 
@@ -106,11 +100,6 @@ public class ListVideoTexture implements VideoTexture {
 	}
 
 	@Override
-	public boolean isLoopable() {
-		return loop;
-	}
-
-	@Override
 	public Iterator<ImageTexture> iterator() {
 		return new Itr(0);
 	}
@@ -118,10 +107,5 @@ public class ListVideoTexture implements VideoTexture {
 	@Override
 	public ListIterator<ImageTexture> listIterator() {
 		return new ListItr(0);
-	}
-
-	@Override
-	public void setIsLoopable(boolean loop) {
-		this.loop = loop;
 	}
 }
