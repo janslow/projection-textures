@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.jayanslow.projection.texture.listeners.TextureListener;
 import com.jayanslow.projection.texture.models.ImageTexture;
 import com.jayanslow.projection.texture.models.Texture;
 import com.jayanslow.projection.texture.models.TextureMapping;
@@ -15,6 +16,17 @@ import com.jayanslow.projection.world.models.Face;
 public class MapTextureController implements TextureController {
 	private int							currentFrame;
 	private final Map<Face, Texture>	map;
+
+	private final List<TextureListener>	listeners			= new LinkedList<>();
+	private final TextureListener		internalListener	= new TextureListener() {
+																@Override
+																public void textureChange(Texture texture) {
+																	fireTextureChange(texture);
+																}
+
+																@Override
+																public void textureFrameChange(int current, int old) {}
+															};
 
 	public MapTextureController(Map<Face, Texture> map) {
 		this(map, 0);
@@ -29,6 +41,26 @@ public class MapTextureController implements TextureController {
 	public MapTextureController(Map<Face, Texture> map, int currentFrame) {
 		this.currentFrame = currentFrame;
 		this.map = map;
+
+		for (Texture t : map.values())
+			t.addTextureListener(internalListener);
+	}
+
+	@Override
+	public void addTextureListener(TextureListener l) throws NullPointerException {
+		if (l == null)
+			throw new NullPointerException();
+		listeners.add(l);
+	}
+
+	protected void fireFrameChange(int current, int old) {
+		for (TextureListener l : listeners)
+			l.textureFrameChange(current, old);
+	}
+
+	protected void fireTextureChange(Texture texture) {
+		for (TextureListener l : listeners)
+			l.textureChange(texture);
 	}
 
 	@Override
@@ -74,11 +106,19 @@ public class MapTextureController implements TextureController {
 	@Override
 	public void putTexture(Face face, Texture texture) {
 		map.put(face, texture);
+		texture.addTextureListener(internalListener);
 	}
 
 	@Override
 	public void remove(Face face) {
-		map.remove(face);
+		Texture t = map.remove(face);
+		if (t != null)
+			t.removeTextureListener(internalListener);
+	}
+
+	@Override
+	public void removeTextureListener(TextureListener l) {
+		listeners.remove(l);
 	}
 
 	@Override

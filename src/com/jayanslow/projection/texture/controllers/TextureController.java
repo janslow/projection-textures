@@ -2,12 +2,14 @@ package com.jayanslow.projection.texture.controllers;
 
 import java.util.Collection;
 
+import com.jayanslow.projection.texture.listeners.TextureListener;
 import com.jayanslow.projection.texture.models.ImageTexture;
 import com.jayanslow.projection.texture.models.Texture;
 import com.jayanslow.projection.texture.models.TextureMapping;
 import com.jayanslow.projection.world.models.Face;
 
 public interface TextureController {
+	public void addTextureListener(TextureListener l);
 
 	/**
 	 * Gets the current frame number to be displayed
@@ -65,6 +67,8 @@ public interface TextureController {
 	 *            Face to remove
 	 */
 	public void remove(Face face);
+
+	public void removeTextureListener(TextureListener l);
 
 	/**
 	 * Sets the current frame number. The frame will be looped if time > getMaximumFrame()
