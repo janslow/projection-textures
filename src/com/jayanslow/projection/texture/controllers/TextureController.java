@@ -65,8 +65,9 @@ public interface TextureController {
 	 * 
 	 * @param face
 	 *            Face to remove
+	 * @return Texture that was removed if it exists, otherwise null
 	 */
-	public void remove(Face face);
+	public Texture remove(Face face);
 
 	public void removeTextureListener(TextureListener l);
 

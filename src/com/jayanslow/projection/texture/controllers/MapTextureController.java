@@ -71,6 +71,8 @@ public class MapTextureController implements TextureController {
 	@Override
 	public ImageTexture getCurrentImageTexture(Face face) {
 		Texture texture = getTexture(face);
+		if (texture == null)
+			return null;
 		if (texture.isImageTexture())
 			return (ImageTexture) texture;
 
@@ -104,16 +106,25 @@ public class MapTextureController implements TextureController {
 	}
 
 	@Override
-	public void putTexture(Face face, Texture texture) {
+	public void putTexture(Face face, Texture texture) throws NullPointerException {
+		if (face == null || texture == null)
+			throw new NullPointerException();
 		map.put(face, texture);
 		texture.addTextureListener(internalListener);
+		fireTextureChange(texture);
 	}
 
 	@Override
-	public void remove(Face face) {
+	public Texture remove(Face face) throws NullPointerException {
+		if (face == null)
+			throw new NullPointerException();
+
 		Texture t = map.remove(face);
-		if (t != null)
+		if (t != null) {
 			t.removeTextureListener(internalListener);
+			fireTextureChange(null);
+		}
+		return t;
 	}
 
 	@Override
@@ -125,6 +136,10 @@ public class MapTextureController implements TextureController {
 	public void setCurrentFrame(int currentFrame) throws IllegalArgumentException {
 		if (currentFrame < 0)
 			throw new IllegalArgumentException("currentFrame must be non-negative");
+
+		int old = this.currentFrame;
 		this.currentFrame = currentFrame;
+
+		fireFrameChange(currentFrame, old);
 	}
 }
