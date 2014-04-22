@@ -10,7 +10,7 @@ import com.jayanslow.projection.texture.models.ImageTexture;
 import com.jayanslow.projection.texture.models.ListVideoTexture;
 import com.jayanslow.utils.serializer.SerializerFactory;
 
-public class ListVideoTextureSerializer extends AbstractVideoTextureSerializer<ListVideoTexture> {
+public class ListVideoTextureSerializer extends AbstractTextureSerializer<ListVideoTexture> {
 
 	public static final String	KEY_IMAGES	= "images";
 
@@ -34,7 +34,7 @@ public class ListVideoTextureSerializer extends AbstractVideoTextureSerializer<L
 	}
 
 	@Override
-	protected void serializeVideoTexture(ListVideoTexture t, JSONObject o) {
+	protected void serializeTexture(ListVideoTexture t, JSONObject o) {
 		JSONArray array = getFactory().serialize(ImageTexture.class, t.getFrames());
 		o.put(KEY_IMAGES, array);
 	}

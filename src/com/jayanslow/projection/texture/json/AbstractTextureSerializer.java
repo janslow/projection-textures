@@ -8,7 +8,7 @@ import com.jayanslow.utils.serializer.AbstractSerializer;
 import com.jayanslow.utils.serializer.SerializerFactory;
 
 public abstract class AbstractTextureSerializer<T extends Texture> extends AbstractSerializer<T> {
-	public static String	KEY_IS_IMAGE	= "is_image";
+	public static final String	KEY_TEXTURE_TYPE	= "texture_type";
 
 	public AbstractTextureSerializer(SerializerFactory factory, Class<T> targetClass) {
 		super(factory, targetClass);
@@ -16,7 +16,7 @@ public abstract class AbstractTextureSerializer<T extends Texture> extends Abstr
 
 	@Override
 	public void serialize(T t, JSONObject o) throws JSONException {
-		o.put(KEY_IS_IMAGE, t.isImageTexture());
+		o.put(KEY_TEXTURE_TYPE, t.getTextureType().toString().toLowerCase());
 		serializeTexture(t, o);
 	}
 

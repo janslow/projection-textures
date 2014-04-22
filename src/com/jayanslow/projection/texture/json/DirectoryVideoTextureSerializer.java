@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.jayanslow.projection.texture.models.DirectoryVideoTexture;
 import com.jayanslow.utils.serializer.SerializerFactory;
 
-public class DirectoryVideoTextureSerializer extends AbstractVideoTextureSerializer<DirectoryVideoTexture> {
+public class DirectoryVideoTextureSerializer extends AbstractTextureSerializer<DirectoryVideoTexture> {
 
 	public static final String	KEY_DIRECTORY	= "directory";
 
@@ -32,7 +32,7 @@ public class DirectoryVideoTextureSerializer extends AbstractVideoTextureSeriali
 	}
 
 	@Override
-	protected void serializeVideoTexture(DirectoryVideoTexture t, JSONObject o) {
+	protected void serializeTexture(DirectoryVideoTexture t, JSONObject o) {
 		o.put(KEY_DIRECTORY, getFactory().serialize(File.class, t.getDirectory()));
 	}
 

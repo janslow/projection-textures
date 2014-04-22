@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.jayanslow.projection.texture.models.FileImageTexture;
 import com.jayanslow.utils.serializer.SerializerFactory;
 
-public class FileImageTextureSerializer extends AbstractImageTextureSerializer<FileImageTexture> {
+public class FileImageTextureSerializer extends AbstractTextureSerializer<FileImageTexture> {
 
 	public static final String	KEY_FILE	= "file";
 
@@ -32,7 +32,7 @@ public class FileImageTextureSerializer extends AbstractImageTextureSerializer<F
 	}
 
 	@Override
-	protected void serializeImageTexture(FileImageTexture t, JSONObject o) {
+	protected void serializeTexture(FileImageTexture t, JSONObject o) {
 		o.put(KEY_FILE, getFactory().serialize(File.class, t.getFile()));
 	}
 
