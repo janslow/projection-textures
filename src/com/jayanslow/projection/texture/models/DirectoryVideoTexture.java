@@ -5,7 +5,7 @@ import java.io.FilenameFilter;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DirectoryVideoTexture extends ListVideoTexture {
+public class DirectoryVideoTexture extends AbstractVideoTexture {
 	private static List<ImageTexture> getFiles(File dir) throws NullPointerException, IllegalArgumentException {
 		if (dir == null)
 			throw new NullPointerException();
@@ -26,14 +26,14 @@ public class DirectoryVideoTexture extends ListVideoTexture {
 		return textures;
 	}
 
-	private final File	directory;
+	private File	directory;
 
 	public DirectoryVideoTexture(File directory) throws NullPointerException, IllegalArgumentException {
 		this(directory, getFiles(directory));
 	}
 
 	public DirectoryVideoTexture(File directory, List<ImageTexture> images) {
-		super(images);
+		super(TextureType.DIRECTORY, images);
 		this.directory = directory;
 	}
 
@@ -45,8 +45,10 @@ public class DirectoryVideoTexture extends ListVideoTexture {
 		return directory;
 	}
 
-	@Override
-	public VideoTextureType getVideoTextureType() {
-		return VideoTextureType.DIRECTORY;
+	public void setDirectory(File directory) {
+		images = getFiles(directory);
+		this.directory = directory;
+
+		fireTextureChange();
 	}
 }

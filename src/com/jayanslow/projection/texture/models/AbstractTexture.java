@@ -8,12 +8,12 @@ import com.jayanslow.projection.texture.listeners.TextureListener;
 public abstract class AbstractTexture implements Texture {
 
 	private final List<TextureListener>	listeners	= new LinkedList<>();
-	private final boolean				isImageTexture;
+	private final TextureType			type;
 
-	public AbstractTexture(boolean isImageTexture) {
+	public AbstractTexture(TextureType type) {
 		super();
 
-		this.isImageTexture = isImageTexture;
+		this.type = type;
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public abstract class AbstractTexture implements Texture {
 	}
 
 	@Override
-	public boolean isImageTexture() {
-		return isImageTexture;
+	public TextureType getTextureType() {
+		return type;
 	}
 
 	@Override

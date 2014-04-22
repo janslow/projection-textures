@@ -9,7 +9,7 @@ public interface Texture {
 
 	public int getNumberOfFrames();
 
-	boolean isImageTexture();
+	public TextureType getTextureType();
 
 	public void removeTextureListener(TextureListener l);
 }

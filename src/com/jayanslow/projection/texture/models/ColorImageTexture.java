@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.vecmath.Vector2f;
 
-public class ColorImageTexture extends BufferedImageTexture {
+public class ColorImageTexture extends AbstractImageTexture {
 
 	public static final float	DEFAULT_WIDTH	= 500;
 	public static final float	DEFAULT_HEIGHT	= 500;
@@ -22,30 +22,47 @@ public class ColorImageTexture extends BufferedImageTexture {
 		return image;
 	}
 
-	private final Vector2f	dimensions;
-	private final Color		color;
+	private Color		color;
+	private Vector2f	preferredDimensions;
 
 	public ColorImageTexture(Color color) {
 		this(color, new Vector2f(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 	}
 
 	public ColorImageTexture(Color color, Vector2f dimensions) {
-		super(createBufferedImage(color, dimensions));
+		super(TextureType.COLOR);
 		this.color = color;
-		this.dimensions = new Vector2f(dimensions);
+		preferredDimensions = dimensions;
 	}
 
 	public Color getColor() {
 		return color;
 	}
 
-	public Vector2f getDimensions() {
-		return new Vector2f(dimensions);
+	@Override
+	public TextureType getTextureType() {
+		return TextureType.COLOR;
 	}
 
 	@Override
-	public ImageTextureType getImageTextureType() {
-		return ImageTextureType.COLOR;
+	protected BufferedImage loadImage() {
+		return createBufferedImage(color, preferredDimensions);
+	}
+
+	public void setColor(Color color) throws NullPointerException {
+		if (color == null)
+			throw new NullPointerException();
+
+		this.color = color;
+
+		markDirty();
+	}
+
+	public void setDimensions(Vector2f preferredDimensions) throws NullPointerException {
+		if (preferredDimensions == null)
+			throw new NullPointerException();
+
+		this.preferredDimensions = new Vector2f(preferredDimensions);
 	}
 
 }

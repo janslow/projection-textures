@@ -10,7 +10,6 @@ import com.jayanslow.projection.texture.listeners.TextureListener;
 import com.jayanslow.projection.texture.models.ImageTexture;
 import com.jayanslow.projection.texture.models.Texture;
 import com.jayanslow.projection.texture.models.TextureMapping;
-import com.jayanslow.projection.texture.models.VideoTexture;
 import com.jayanslow.projection.world.models.Face;
 
 public class MapTextureController implements TextureController {
@@ -71,13 +70,7 @@ public class MapTextureController implements TextureController {
 	@Override
 	public ImageTexture getCurrentImageTexture(Face face) {
 		Texture texture = getTexture(face);
-		if (texture == null)
-			return null;
-		if (texture.isImageTexture())
-			return (ImageTexture) texture;
-
-		VideoTexture videoTexture = (VideoTexture) texture;
-		return videoTexture.getImageTexture(currentFrame);
+		return texture.getImageTexture(currentFrame);
 	}
 
 	@Override
@@ -89,7 +82,7 @@ public class MapTextureController implements TextureController {
 				max = temp;
 
 		}
-		return 0;
+		return max;
 	}
 
 	@Override

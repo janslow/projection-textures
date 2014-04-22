@@ -8,17 +8,15 @@ import javax.imageio.ImageIO;
 
 public class FileImageTexture extends AbstractImageTexture {
 
-	private BufferedImage	image;
-	private final File		file;
-	private final boolean	isLoaded;
+	private final File	file;
 
 	public FileImageTexture(File file) throws NullPointerException, IllegalArgumentException {
+		super(null);
 		if (file == null)
 			throw new NullPointerException();
 		if (!file.isFile())
 			throw new IllegalArgumentException();
 		this.file = file;
-		isLoaded = false;
 	}
 
 	public FileImageTexture(String path) {
@@ -42,21 +40,13 @@ public class FileImageTexture extends AbstractImageTexture {
 		return true;
 	}
 
-	@Override
-	public BufferedImage getBufferedImage() {
-		if (isLoaded)
-			return image;
-		else
-			return null;
-	}
-
 	public File getFile() {
 		return file;
 	}
 
 	@Override
-	public ImageTextureType getImageTextureType() {
-		return ImageTextureType.FILE;
+	public TextureType getTextureType() {
+		return TextureType.FILE;
 	}
 
 	@Override
@@ -67,14 +57,18 @@ public class FileImageTexture extends AbstractImageTexture {
 		return result;
 	}
 
-	public boolean isLoaded() {
-		return isLoaded;
+	@Override
+	protected BufferedImage loadImage() {
+		try {
+			return ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public void load() throws IOException {
-		if (isLoaded)
-			return;
-		image = ImageIO.read(file);
+	public void refresh() {
+		markDirty();
 	}
 
 }

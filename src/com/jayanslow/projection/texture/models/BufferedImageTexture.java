@@ -4,21 +4,24 @@ import java.awt.image.BufferedImage;
 
 public class BufferedImageTexture extends AbstractImageTexture {
 
-	private final BufferedImage	image;
+	private BufferedImage	image;
 
 	public BufferedImageTexture(BufferedImage image) {
-		super();
+		super(TextureType.BUFFERED);
 		this.image = image;
 	}
 
 	@Override
-	public BufferedImage getBufferedImage() {
+	protected BufferedImage loadImage() {
 		return image;
 	}
 
-	@Override
-	public ImageTextureType getImageTextureType() {
-		return ImageTextureType.BUFFERED;
+	public void setImage(BufferedImage image) throws NullPointerException {
+		if (image == null)
+			throw new NullPointerException();
+		this.image = image;
+
+		markDirty();
 	}
 
 }
