@@ -1,9 +1,11 @@
 package com.jayanslow.projection.texture.models;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.LinkedList;
+import java.io.FileFilter;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.jayanslow.utils.ExtensionFileFilter;
 
 public class DirectoryVideoTexture extends AbstractVideoTexture {
 	private static List<ImageTexture> getFiles(File dir) throws NullPointerException, IllegalArgumentException {
@@ -12,14 +14,8 @@ public class DirectoryVideoTexture extends AbstractVideoTexture {
 		if (!dir.isDirectory())
 			throw new IllegalArgumentException();
 
-		File[] files = dir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-
-				return name.toLowerCase().matches(".*\\.(jpg|jpeg|png|gif)");
-			}
-		});
-		List<ImageTexture> textures = new LinkedList<>();
+		File[] files = dir.listFiles((FileFilter) ExtensionFileFilter.createImageFileFilter());
+		List<ImageTexture> textures = new ArrayList<>(files.length);
 		for (File f : files)
 			textures.add(new FileImageTexture(f));
 
