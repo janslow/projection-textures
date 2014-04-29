@@ -12,13 +12,13 @@ public class PreviewTexture implements Texture {
 	public static PreviewTexture preview(TextureController controller, Face face, Texture preview) {
 		Texture original = controller.getTexture(face);
 		PreviewTexture t;
-		if (original instanceof PreviewTexture) {
+		if (original instanceof PreviewTexture)
 			t = (PreviewTexture) original;
-			t.preview(preview);
-		} else {
-			t = new PreviewTexture(controller, face);
-			t.preview(preview);
+		else {
+			t = new PreviewTexture(controller, face, original);
+			controller.putTexture(face, t);
 		}
+		t.preview(preview);
 		return t;
 	}
 
