@@ -6,35 +6,12 @@ import java.util.ListIterator;
 
 public abstract class AbstractVideoTexture extends AbstractTexture implements VideoTexture {
 
-	class Itr implements Iterator<ImageTexture> {
+	class ListItr implements ListIterator<ImageTexture> {
 
 		protected int	i;
 
-		public Itr(int i) {
-			this.i = i;
-		}
-
-		@Override
-		public boolean hasNext() {
-			return i < images.size();
-		}
-
-		@Override
-		public ImageTexture next() {
-			return images.get(i++);
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-	}
-
-	class ListItr extends Itr implements ListIterator<ImageTexture> {
-
 		public ListItr(int i) {
-			super(i);
+			this.i = i;
 		}
 
 		@Override
@@ -43,8 +20,18 @@ public abstract class AbstractVideoTexture extends AbstractTexture implements Vi
 		}
 
 		@Override
+		public boolean hasNext() {
+			return i < images.size();
+		}
+
+		@Override
 		public boolean hasPrevious() {
 			return i > 0;
+		}
+
+		@Override
+		public ImageTexture next() {
+			return images.get(i++);
 		}
 
 		@Override
@@ -60,6 +47,11 @@ public abstract class AbstractVideoTexture extends AbstractTexture implements Vi
 		@Override
 		public int previousIndex() {
 			return i - 1;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -93,12 +85,19 @@ public abstract class AbstractVideoTexture extends AbstractTexture implements Vi
 
 	@Override
 	public Iterator<ImageTexture> iterator() {
-		return new Itr(0);
+		return listIterator();
 	}
 
 	@Override
 	public ListIterator<ImageTexture> listIterator() {
 		return new ListItr(0);
+	}
+
+	@Override
+	public ListIterator<ImageTexture> listIterator(int position) {
+		if (position >= getNumberOfFrames())
+			throw new IllegalArgumentException("position < getNumberOfFrames()");
+		return new ListItr(position);
 	}
 
 }
