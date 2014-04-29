@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class FileImageTexture extends AbstractImageTexture {
 
-	private final File	file;
+	private File	file;
 
 	public FileImageTexture(File file) throws NullPointerException, IllegalArgumentException {
 		super(null);
@@ -67,8 +67,14 @@ public class FileImageTexture extends AbstractImageTexture {
 		}
 	}
 
-	public void refresh() {
+	public void reload() {
 		markDirty();
 	}
 
+	public void setFile(File file) throws NullPointerException {
+		if (file == null)
+			throw new NullPointerException();
+		this.file = file;
+		markDirty();
+	}
 }
