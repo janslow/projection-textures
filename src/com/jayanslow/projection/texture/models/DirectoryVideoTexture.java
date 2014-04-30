@@ -41,6 +41,10 @@ public class DirectoryVideoTexture extends AbstractVideoTexture {
 		return directory;
 	}
 
+	public void reload() {
+		images = getFiles(directory);
+	}
+
 	public void setDirectory(File directory) {
 		images = getFiles(directory);
 		this.directory = directory;
