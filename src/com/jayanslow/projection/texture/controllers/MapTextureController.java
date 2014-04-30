@@ -70,6 +70,8 @@ public class MapTextureController implements TextureController {
 	@Override
 	public ImageTexture getCurrentImageTexture(Face face) {
 		Texture texture = getTexture(face);
+		if (texture == null)
+			return null;
 		return texture.getImageTexture(currentFrame);
 	}
 
